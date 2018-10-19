@@ -1,17 +1,21 @@
 require_relative 'heap'
 require_relative 'heap_sort'
 
-# need to complete code
 def firstkNonRepeating(str, k)
-    counter = Hash.new([0,""])
-    str.chars.each_with_index do |char, idx| 
-        counter[char][0] += 1
-        counter[char][1] = idx
+    counter = Hash.new()
+    str.chars.each_with_index do |char, idx|
+        if !counter[char] 
+            counter[char] = [1, idx]
+        elsif 
+            counter[char][0] += 1
+            counter[char][1] = idx
+        end
     end
-
+    
     uniq = counter.select { |k,v| v[0] < 2 }
-    uniqHeap = BinaryMinHeap.new()
-    uniq.each do |k,v|
-        uniqHeap.push(v[1])
-    end
+    uniq_heap = uniq.values.map {|v| v[1] }
+    uniq_heap.map {|idx| str[idx]}
 end
+
+str = "ABCDBAGHCHFAC"
+p firstkNonRepeating(str, 3)
